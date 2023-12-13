@@ -38,7 +38,7 @@ final class DebugLogger implements Logger {
 
   @override
   void v(String message, {Object? error, StackTrace? stackTrace}) =>
-      _logger.v(message, error: error, stackTrace: stackTrace);
+      _logger.t(message, error: error, stackTrace: stackTrace);
 
   @override
   void w(String message, {Object? error, StackTrace? stackTrace}) =>
@@ -46,5 +46,5 @@ final class DebugLogger implements Logger {
 
   @override
   void wtf(String message, {Object? error, StackTrace? stackTrace}) =>
-      _logger.wtf(message, error: error, stackTrace: stackTrace);
+      _logger.log(l.Level.fatal, message, error: error, stackTrace: stackTrace);
 }

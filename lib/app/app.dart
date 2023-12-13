@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../blocs/authentication/authentication_cubit.dart';
 import '../common/di/service_locator.dart';
+import '../common/utils/utils.dart';
 import '../domain/repositories/city_repository.dart';
 import '../l10n/l10n.dart';
 import '../navigation/navigation.dart';
@@ -33,8 +34,24 @@ final class App extends StatelessWidget {
   }
 }
 
-final class AppView extends StatelessWidget {
+final class AppView extends StatefulWidget {
   const AppView({super.key});
+
+  @override
+  State<AppView> createState() => AppViewState();
+
+  static AppViewState of(BuildContext context) =>
+      context.findAncestorStateOfType<AppViewState>()!;
+}
+
+final class AppViewState extends State<AppView> {
+  ThemeMode _themeMode = ThemeMode.system;
+
+  void setThemeMode(ThemeMode mode) {
+    safeSetState(() {
+      _themeMode = mode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +64,7 @@ final class AppView extends StatelessWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: AppRouter.routerConfig,
+        themeMode: _themeMode,
       ),
     );
   }

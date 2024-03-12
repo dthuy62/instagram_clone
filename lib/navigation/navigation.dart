@@ -3,13 +3,18 @@ import 'package:go_router/go_router.dart';
 
 import '../blocs/authentication/authentication_cubit.dart';
 import '../common/error_screen.dart';
+import '../screens/bottom_nav/bottom_nav.dart';
 import '../screens/home/home.dart';
 import '../screens/login/login.dart';
 
 abstract class NavigationPath {
   NavigationPath._();
+
   static const home = '/home';
   static const login = '/';
+  static const search = '/search';
+  static const reels = '/reels';
+  static const account = '/account';
 }
 
 abstract class AppRouter {
@@ -26,13 +31,26 @@ abstract class AppRouter {
       }
     },
     routes: [
-      GoRoute(
-        path: NavigationPath.home,
-        builder: (_, __) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: NavigationPath.login,
-        builder: (_, __) => const LoginScreen(),
+      ShellRoute(
+        builder: (_, state, child) => BottomNav(child: child),
+        routes: [
+          GoRoute(
+            path: NavigationPath.home,
+            builder: (_, __) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: NavigationPath.search,
+            builder: (_, __) => const LoginScreen(),
+          ),
+          GoRoute(
+            path: NavigationPath.reels,
+            builder: (_, __) => const LoginScreen(),
+          ),
+          GoRoute(
+            path: NavigationPath.account,
+            builder: (_, __) => const LoginScreen(),
+          ),
+        ],
       ),
     ],
     errorBuilder: (_, __) => const ErrorScreen(),

@@ -26,6 +26,10 @@ class AppAssets {
       AppAssetBuilder('${_svgAsset}icon_reels_inactive.svg');
   AppAssetBuilder get iconReelsActive =>
       AppAssetBuilder('${_svgAsset}icon_reels_active.svg');
+  AppAssetBuilder get iconLogoText =>
+      AppAssetBuilder('${_svgAsset}icon_logo_text.svg');
+  AppAssetBuilder get iconMessenger =>
+      AppAssetBuilder('${_svgAsset}icon_messenger.svg');
 }
 
 class AppAssetBuilder {

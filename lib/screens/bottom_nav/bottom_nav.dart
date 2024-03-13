@@ -5,6 +5,7 @@ import '../../common/assets/app_assets.dart';
 import '../../common/extensions/extensions.dart';
 import '../../common/extensions/strings.dart';
 import '../../models/apps/bottom_nav_type.dart';
+import '../../navigation/navigation.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({
@@ -14,14 +15,26 @@ class BottomNav extends StatelessWidget {
 
   final Widget child;
 
-  int _caculateSelectedIndex(BuildContext context) {
-    final location = GoRouterState.of(context).uri.toString().toEnum;
-    return switch (location) {
-      BottomNavType.home => 0,
-      BottomNavType.search => 1,
-      BottomNavType.reels => 2,
-      BottomNavType.account => 3,
-    };
+  BottomNavType _caculateSelectedIndex(BuildContext context) {
+    return context.goRouterState.uri.toString().toEnum;
+  }
+
+  void _onItemTapped(BuildContext context, int index) {
+    switch (index.toEnumBottomNavType) {
+      case BottomNavType.home:
+        context.go(NavigationPath.home);
+        break;
+      case BottomNavType.search:
+        context.go(NavigationPath.search);
+        break;
+      case BottomNavType.reels:
+        context.go(NavigationPath.reels);
+        break;
+      case BottomNavType.account:
+      default:
+        context.go(NavigationPath.account);
+        break;
+    }
   }
 
   @override
@@ -29,6 +42,9 @@ class BottomNav extends StatelessWidget {
     return Scaffold(
       body: child,
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _caculateSelectedIndex(context).index,
+        onTap: (index) => _onItemTapped(context, index),
         items: [
           BottomNavigationBarItem(
             activeIcon: AppAssets.init.iconHomeActive.widget(),
@@ -36,10 +52,12 @@ class BottomNav extends StatelessWidget {
             label: '',
           ),
           BottomNavigationBarItem(
+            activeIcon: AppAssets.init.iconSearchActive.widget(),
             icon: AppAssets.init.iconSearchInactive.widget(),
             label: '',
           ),
           BottomNavigationBarItem(
+            activeIcon: AppAssets.init.iconReelsActive.widget(),
             icon: AppAssets.init.iconReelsInactive.widget(),
             label: '',
           ),
